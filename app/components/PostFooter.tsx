@@ -22,7 +22,6 @@ import {
   FileTextIcon,
 } from "@radix-ui/react-icons";
 import {
-  deleteItem,
   deleteOne,
   hasLiked,
   likeItem,
