@@ -14,18 +14,18 @@ import { Label } from "@radix-ui/react-label";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import loginimage from "../../../public/craiyon_083841_A_winding_path_through_a_desolate_landscape_leading_to_a_foreboding_mountain_super_hi.png";
-import { useSignIn } from "@clerk/nextjs";
+import { useSignIn, useSignUp } from "@clerk/nextjs";
 
 import Image from "next/image";
 import { OAuthStrategy } from "@clerk/nextjs/dist/types/server";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-function Login({ searchParams }: { searchParams: any }) {
+function Create({ searchParams }: { searchParams: any }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { isLoaded, signIn, setActive } = useSignIn();
-
+  const { isLoaded, signUp, setActive } = useSignUp();
+  const { signIn } = useSignIn();
   const [isLoading, setIsLoading] = React.useState<OAuthStrategy | null>();
   const buttons = [
     {
@@ -69,8 +69,8 @@ function Login({ searchParams }: { searchParams: any }) {
         toast({ title: "length of password must me more than 8 characters" });
         return;
       }
-      const result = await signIn?.create({
-        identifier: userName,
+      const result = await signUp?.create({
+        username: userName,
         password,
       });
 
@@ -80,13 +80,13 @@ function Login({ searchParams }: { searchParams: any }) {
         router.push("/");
       } else {
         /*Investigate why the login hasn't completed */
-        toast({ title: "unable to login" });
+        toast({ title: "unable to signup" });
         console.log(result);
       }
     } catch (err: any) {
-      toast({ title: "unable to login" });
-
-      console.error("error", err.errors[0].longMessage);
+      toast({ title: err.errors[0].longMessage });
+      console.log(err);
+      console.error("errors", err.errors[0].longMessage);
     }
   };
   // return (
@@ -106,13 +106,15 @@ function Login({ searchParams }: { searchParams: any }) {
   //   </Card>
   // );
   return (
-    <div className="flex items-center justify-center h-[90vh]">
-      {" "}
+    <div className="flex items-center px-6 mt-28 justify-around h-[80vh] ">
+      <Card className="h-[80vh] hidden md:block ">
+        <Image src={loginimage} className="h-full w-full" alt="image" />
+      </Card>
       <Card className="max-w-[500px] bg-black">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl">Login </CardTitle>
+          <CardTitle className="text-2xl">Create your Account </CardTitle>
           <CardDescription>
-            Enter your username below to login to your account
+            Enter your Username below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -162,16 +164,19 @@ function Login({ searchParams }: { searchParams: any }) {
             />
           </div>
         </CardContent>
-        <CardContent>
-          <Button onClick={handleSubmit} className="w-full">
-            Login
+        <CardFooter>
+          <Button
+            onClick={async (e) => await handleSubmit(e)}
+            className="w-full"
+          >
+            Sign Up
           </Button>
-        </CardContent>
+        </CardFooter>
         <CardFooter>
           <h1 className=" pb-2">
-            Dont have a account?{" "}
-            <Link className=" underline" href="/signup">
-              Sign Up
+            Already have a account?{" "}
+            <Link className=" underline" href="/login">
+              Log In
             </Link>
           </h1>
         </CardFooter>
@@ -180,4 +185,4 @@ function Login({ searchParams }: { searchParams: any }) {
   );
 }
 
-export default Login;
+export default Create;
