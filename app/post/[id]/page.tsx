@@ -14,6 +14,7 @@ const getSinglePost = async (id: any) => {
       id: post.id,
       likes: post.likes,
       userId: post.userId,
+      createdAt: post.createdAt,
       community: {
         name: communitytable.name,
         id: communitytable.id,

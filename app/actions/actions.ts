@@ -140,7 +140,6 @@ export const createComment = async (
   postId: string
 ) => {
   try {
-    //@ts-expect-error
     await db.insert(comment).values({ content, userId, postId }); ///fix it
     return true;
   } catch (err) {
