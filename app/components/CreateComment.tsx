@@ -24,7 +24,7 @@ function CreateComment({ postId }: { postId: string }) {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
   const user = useUser();
-  const toast = useToast();
+  const { toast } = useToast();
   console.log(user);
   //////bug empty string due to onchange in select of radix ui....check community state ///fix the select component
 
