@@ -15,7 +15,7 @@ import { Icons } from "@/components/icons";
 import Link from "next/link";
 import loginimage from "../../../public/craiyon_083841_A_winding_path_through_a_desolate_landscape_leading_to_a_foreboding_mountain_super_hi.png";
 import { useSignIn, useSignUp } from "@clerk/nextjs";
-
+import { SignUp } from "@clerk/nextjs";
 import Image from "next/image";
 import { OAuthStrategy } from "@clerk/nextjs/dist/types/server";
 import React, { useState } from "react";
@@ -115,13 +115,14 @@ function Create({ searchParams }: { searchParams: any }) {
         <Image src={loginimage} className="h-full w-full" alt="image" />
       </Card>
       <Card className="max-w-[500px] bg-black">
-        <CardHeader className="space-y-1">
+        {/* <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Create your Account </CardTitle>
           <CardDescription>
             Enter your Username below to create your account
           </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4">
+        </CardHeader> */}
+        <SignUp />
+        {/* <CardContent className="grid gap-4">
           <div className="grid grid-cols-2 gap-6">
             {buttons.map((button) => {
               const Icon = Icons[button.icon];
@@ -167,23 +168,23 @@ function Create({ searchParams }: { searchParams: any }) {
               type="password"
             />
           </div>
-        </CardContent>
-        <CardFooter>
+        </CardContent> */}
+        {/* <CardFooter>
           <Button
             onClick={async (e) => await handleSubmit(e)}
             className="w-full"
           >
             Sign Up
           </Button>
-        </CardFooter>
-        <CardFooter>
+        </CardFooter> */}
+        {/* <CardFooter>
           <h1 className=" pb-2">
             Already have a account?{" "}
             <Link className=" underline" href="/login">
               Log In
             </Link>
           </h1>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
