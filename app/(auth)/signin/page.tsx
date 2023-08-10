@@ -106,8 +106,10 @@ function Login({ searchParams }: { searchParams: any }) {
   //   </Card>
   // );
   return (
-    <div className="flex items-center justify-center h-[90vh]">
-      {" "}
+    <div className="flex items-center px-6 mt-28 justify-around h-[80vh] ">
+      <Card className="h-[80vh] hidden md:block ">
+        <Image src={loginimage} className="h-full w-full" alt="image" />
+      </Card>
       <Card className="max-w-[500px] bg-black">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Login </CardTitle>
