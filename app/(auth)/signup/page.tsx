@@ -45,9 +45,14 @@ function Create({ searchParams }: { searchParams: any }) {
   }[];
   const router = useRouter();
 
-  const handlesignin = async (strategy: OAuthStrategy) => {
+  const handleSignUp = async (strategy: OAuthStrategy) => {
     try {
       setIsLoading(strategy);
+      await signUp?.authenticateWithRedirect({
+        strategy: strategy,
+        redirectUrl: "/",
+        redirectUrlComplete: "/",
+      });
       await signIn?.authenticateWithRedirect({
         strategy: strategy,
         redirectUrl: "/",
@@ -60,7 +65,6 @@ function Create({ searchParams }: { searchParams: any }) {
   console.log(userName, password);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     try {
       if (!isLoaded) {
         return;
@@ -123,7 +127,7 @@ function Create({ searchParams }: { searchParams: any }) {
               const Icon = Icons[button.icon];
               return (
                 <Button
-                  onClick={() => handlesignin(button.strategy)}
+                  onClick={() => handleSignUp(button.strategy)}
                   variant="outline"
                 >
                   {isLoading == button.strategy ? (
