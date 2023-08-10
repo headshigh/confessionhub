@@ -21,13 +21,7 @@ import {
   CheckIcon,
   FileTextIcon,
 } from "@radix-ui/react-icons";
-import {
-  deleteItem,
-  deleteOne,
-  hasLiked,
-  likeItem,
-  unlikeItem,
-} from "../actions/actions";
+import { deleteOne, hasLiked, likeItem, unlikeItem } from "../actions/actions";
 import { currentUser, useUser } from "@clerk/nextjs";
 import Spinner from "@/components/Spinner";
 import { useToast } from "@/components/ui/use-toast";
