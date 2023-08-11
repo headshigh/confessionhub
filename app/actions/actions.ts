@@ -24,6 +24,8 @@ export const joinCommunity = async (id: string) => {
     await db
       .insert(communitymembers)
       .values({ userId: me?.id, communityId: id });
+    revalidateTag("joinedcommunities");
+    revalidateTag("notjoinedcommunities");
     return true;
   } catch (err) {
     console.log(err);
@@ -115,6 +117,9 @@ export const getNotJoinedCommunities = async (userId: string) => {
         (table) =>
           sql` ${communitytable.id} not in (select communityId from ${communitymembers} where ${communitymembers.userId}=${userId})`
       );
+    next: {
+      tags: ["notjoinedcommunities"];
+    }
     return communities;
   } catch (err) {
     console.log(err);
@@ -135,6 +140,9 @@ export const getJoinedCommunities = async (userId: string) => {
         eq(communitytable.id, communitymembers.communityId)
       )
       .where(or(eq(communitymembers.userId, userId)));
+    next: {
+      tags: ["joinedcommunities"];
+    }
     return communities;
   } catch (err) {
     console.log(err);
@@ -146,7 +154,8 @@ export const createComment = async (
   postId: string
 ) => {
   try {
-    await db.insert(comment).values({ content, userId, postId }); ///fix it
+    await db.insert(comment).values({ content, userId, postId });
+    revalidateTag("comments");
     return true;
   } catch (err) {
     console.log(err);
@@ -264,6 +273,9 @@ export const getCommentsCount = async (id: string) => {
       .select({ count: sql<number>`count(*)` })
       .from(comment)
       .where(eq(comment.postId, id));
+    next: {
+      tags: ["commentcount"];
+    }
   } catch (err) {
     console.log(err);
   }
@@ -283,8 +295,10 @@ export const deleteOne = async (id: number, usecase: string) => {
       //delete all comments of that posts and likes for that post
       await db.delete(comment).where(eq(comment.postId, id.toString()));
       await db.delete(likeTable).where(eq(likeTable.postId, id.toString()));
+      revalidateTag("singlepost");
     } else {
       await db.delete(likeTable).where(eq(likeTable.commentId, id.toString()));
+      revalidateTag("comments");
     }
     return true;
   } catch (err) {

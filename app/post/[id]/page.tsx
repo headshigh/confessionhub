@@ -29,6 +29,9 @@ const getSinglePost = async (id: any) => {
       hasLiked: await hasLiked(post.id, "post"),
     };
   });
+  next: {
+    tags: ["singlepost"];
+  }
   const mappedPosts = await Promise.all(promises);
   return mappedPosts;
 };

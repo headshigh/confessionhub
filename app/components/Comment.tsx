@@ -26,6 +26,9 @@ const getComments = async (id: any) => {
     };
   });
   const mappedcomment = await Promise.all(promises);
+  next: {
+    tags: ["comments"];
+  }
   return mappedcomment;
 };
 async function Comment({ postId }: { postId: string }) {
