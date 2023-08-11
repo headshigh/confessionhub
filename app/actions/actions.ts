@@ -14,6 +14,8 @@ import { ca } from "drizzle-orm/column.d-9d2f4045";
 import { table } from "console";
 import Error from "next/error";
 import { ErrorProps } from "next/error";
+import next from "next/types";
+import { revalidatePath, revalidateTag } from "next/cache";
 export const joinCommunity = async (id: string) => {
   try {
     const me = await currentUser();
@@ -39,6 +41,7 @@ export const createPost = async (
       userId,
       communityId: communityId,
     });
+    revalidateTag("posts");
     return true;
   } catch (err) {
     console.log(err);
@@ -86,6 +89,9 @@ export const getPosts = async () => {
       };
     });
     const mappedPosts = await Promise.all(promises);
+    next: {
+      tags: ["posts"];
+    }
     return mappedPosts;
   } catch (err) {
     console.log(err);
