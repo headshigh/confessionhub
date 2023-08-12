@@ -21,6 +21,7 @@ export default async function page() {
   console.log(posts);
   const communities = await getNotJoinedCommunities(me?.id || "");
   const joinedCommuniteis = (await getJoinedCommunities(me?.id || "")) || [];
+  console.log(joinedCommuniteis);
   return (
     <div className="flex sm:justify-start lg:justify-center lg:w-4/5 ">
       <div className="flex flex-col  w-3/4 items-center gap-y-5 mt-16">

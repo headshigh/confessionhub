@@ -16,21 +16,42 @@ import Error from "next/error";
 import { ErrorProps } from "next/error";
 import next from "next/types";
 import { revalidatePath, revalidateTag } from "next/cache";
-export const joinCommunity = async (id: string) => {
+export const joinCommunity = async (e: FormData) => {
   try {
     const me = await currentUser();
     console.log("joining community... ");
     if (!me) return null;
     await db
       .insert(communitymembers)
-      .values({ userId: me?.id, communityId: id });
+      .values({ userId: me?.id, communityId: e.get("id")?.toString() || "" });
     revalidateTag("joinedcommunities");
     revalidateTag("notjoinedcommunities");
-    return true;
+    revalidateTag("hasjoined");
   } catch (err) {
     console.log(err);
   }
 };
+export const leaveCommunity = async (e: FormData) => {
+  try {
+    console.log("leave id", e.get("id"));
+    const me = await currentUser();
+    if (!me) return null;
+    await db
+      .delete(communitymembers)
+      .where(
+        and(
+          eq(communitymembers.userId, me.id),
+          eq(communitymembers.communityId, e.get("id")?.toString() || "")
+        )
+      );
+    revalidateTag("joinedcommunities");
+    revalidateTag("notjoinedcommunities");
+    revalidateTag("hasjoined");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const createPost = async (
   content: string,
   userId: string,

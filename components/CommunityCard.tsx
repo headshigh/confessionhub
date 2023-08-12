@@ -19,6 +19,9 @@ import Link from "next/link";
 import { currentUser, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
+import { useTransition } from "react";
+import { join } from "path";
+import { leaveCommunity } from "../app/actions/actions";
 export interface communitytype {
   id: number;
   name: string;
@@ -36,9 +39,13 @@ export function CommunityCard({
 }) {
   const [joined, setJoined] = useState(hasJoined);
   const [loading, setLoading] = useState(false);
+
   const user = useUser();
   const { toast } = useToast();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const formdata = new FormData();
+  formdata.append("id", data?.id.toString());
   console.log(user);
   return (
     <Card className={` bg-black w-[180px]  md:w-[250px]  ${className}`}>
@@ -52,6 +59,25 @@ export function CommunityCard({
         <div className="flex items-center justify-between  rounded-md  text-secondary-foreground">
           {/* <Separator orientation="vertical" className="h-[20px]" /> */}
           {!loading ? (
+            <Button
+              onClick={async () => {
+                setLoading(true);
+                hasJoined
+                  ? await leaveCommunity(formdata)
+                  : await joinCommunity(formdata);
+                setJoined((prev) => !prev);
+                setLoading(false);
+              }}
+            >
+              {hasJoined ? "Leave" : "Join"}
+            </Button>
+          ) : (
+            <Button disabled className="animate-pulse">
+              ...
+            </Button>
+          )}
+
+          {/* {!loading ? (
             <Button
               disabled={joined}
               onClick={async () => {
@@ -81,7 +107,7 @@ export function CommunityCard({
             </Button>
           ) : (
             <Button>Loading...</Button>
-          )}
+          )} */}
         </div>
       </CardHeader>
       <CardContent>
