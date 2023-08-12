@@ -24,7 +24,7 @@ export default async function page() {
   console.log(joinedCommuniteis);
   return (
     <div className="flex sm:justify-start lg:justify-center lg:w-4/5 ">
-      <div className="flex flex-col  w-3/4 items-center gap-y-5 mt-16">
+      <div className="flex  px-1 flex-col w-full md:w-3/4 items-center gap-y-5 mt-16">
         <CreatePost joined={joinedCommuniteis} />
         {posts?.length == 0 && (
           <h1 className="text-lg tracking-wider font-medium">

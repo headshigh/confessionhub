@@ -47,7 +47,7 @@ export async function SinglePost({ data }: { data: dataprops }) {
   // const currUser = currentUser();
   // console.log(currUser);
   return (
-    <Card className="w-[280px] sm:w-[400px] lg:w-[750px] pt-4 bg-black">
+    <Card className="w-[290px] sm:w-[400px] lg:w-[750px] pt-4 bg-black">
       <CardContent>
         {/* <Separator className="my-4" /> */}
         <div className="space-y-4">

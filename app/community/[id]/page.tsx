@@ -43,9 +43,9 @@ async function SingleCommunityView({ params }: { params: any }) {
   console.log(finalPosts);
   return (
     <div>
-      <div className="w-full h-20 mb-2 mt-28    tracking-widest bg-slate-400 flex justify-center items-center">
+      <div className="w-full h-20 mb-2 mt-20 md:mt-28    tracking-widest bg-slate-400 flex justify-center items-center">
         <div>
-          <div className="flex gap-5">
+          <div className="flex gap-1 md:gap-5">
             <h1 className="font-bold text-3xl">{communityPosts?.name}</h1>
             <Button>{hasJoined ? "Leave" : "Join"}</Button>
           </div>
@@ -54,7 +54,7 @@ async function SingleCommunityView({ params }: { params: any }) {
       </div>
       {/* {communityPosts.posts.map(post=>)} */}
       <div className="flex ">
-        <div className="flex flex-col w-9/12   items-end">
+        <div className="flex flex-col w-full  md:w-9/12  items-center md:items-end">
           {finalPosts?.map((post) => (
             <SinglePost data={post} />
           ))}

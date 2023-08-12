@@ -7,6 +7,7 @@ import { SinglePost } from "@/app/components/SinglePost";
 import { comment } from "../../../lib/db/schema";
 import Comment from "@/app/components/Comment";
 import { hasLiked } from "@/app/actions/actions";
+
 const getSinglePost = async (id: any) => {
   const posts = await db
     .select({
@@ -39,15 +40,9 @@ const getSinglePost = async (id: any) => {
 async function SingePostView({ params }: { params: any }) {
   const postdata = await getSinglePost(params.id);
   console.log(postdata[0]);
-  if (!postdata)
-    return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
-    );
   return (
     <div className="text-white  flex  flex-col items-center mt-28">
-      <SinglePost data={postdata[0]} />
+      {postdata ? <SinglePost data={postdata[0]} /> : <h1>Loading..</h1>}
       <Comment postId={params.id} />
     </div>
   );

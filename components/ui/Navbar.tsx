@@ -11,22 +11,20 @@ export function Navbar({
 }: React.HTMLAttributes<HTMLElement>) {
   const { isSignedIn } = useUser();
   const [active, setActive] = useState("feed");
-  console.log(active);
-  console.log(isSignedIn);
   return (
     <Card
       className={cn(
-        " items-center justify-between  py-8 space-x-4 lg:space-x-6 bg-black  hidden sm:flex border-b-1 border-r-0 border-l-0 mb-6 rounded-none px-6",
+        " items-center flex  justify-between  py-4 md:py-8 space-x-4 lg:space-x-6 bg-black    border-b-1 border-r-0 border-l-0 mb-6 rounded-none px-1 md:px-6",
         className
       )}
       {...props}
     >
-      <Link href={"/"}>
-        <div>
+      <div>
+        <Link href={"/"}>
           <span className="text-3xl">CH</span>
-        </div>
-      </Link>
-      <div className="flex gap-x-20 ">
+        </Link>
+      </div>
+      <div className="flex gap-x-12 md:gap-x-20 ">
         <Link
           onClick={() => setActive("feed")}
           href="/"
